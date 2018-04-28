@@ -10,8 +10,8 @@ class Trash(Base):
     name = Column(String)
     reading = Column(String)
     detail = Column(Text)
-    created_at = Column(Datetime, onupdate=datetime.datetime.now)
-    updated_at = Column(Datetime, onupdate=datetime.datetime.now)
+    created_at = Column(DateTime, onupdate=datetime.datetime.now)
+    updated_at = Column(DateTime, onupdate=datetime.datetime.now)
 
     throw_rules = relationship('ThrowRule', backref="trash")
 
@@ -20,8 +20,8 @@ class Category(Base):
 
     category_id = Column(Integer, primary_key=True)
     name = Column(String)
-    created_at = Column(Datetime, onupdate=datetime.datetime.now)
-    updated_at = Column(Datetime, onupdate=datetime.datetime.now)
+    created_at = Column(DateTime, onupdate=datetime.datetime.now)
+    updated_at = Column(DateTime, onupdate=datetime.datetime.now)
 
     throw_rules = relationship('ThrowRule', backref="category")
     collection_rules = relationship('CollectionRule', backref="category")
@@ -31,8 +31,8 @@ class Area(Base):
 
     area_id = Column(Integer, primary_key=True)
     name = Column(String)
-    created_at = Column(Datetime, onupdate=datetime.datetime.now)
-    updated_at = Column(Datetime, onupdate=datetime.datetime.now)
+    created_at = Column(DateTime, onupdate=datetime.datetime.now)
+    updated_at = Column(DateTime, onupdate=datetime.datetime.now)
 
     towns = relationship('Town', backref="area")
 
@@ -42,8 +42,8 @@ class Town(Base):
     town_id = Column(Integer, primary_key=True)
     area_id = Column(Integer, ForeignKey('areas.area_id'))
     name = Column(String)
-    created_at = Column(Datetime, onupdate=datetime.datetime.now)
-    updated_at = Column(Datetime, onupdate=datetime.datetime.now)
+    created_at = Column(DateTime, onupdate=datetime.datetime.now)
+    updated_at = Column(DateTime, onupdate=datetime.datetime.now)
    
     collection_rules = relationship('CollectionRule', backref="town")
 
@@ -54,8 +54,8 @@ class CollectionRule(Base):
     category_id = Column(Integer, ForeignKey('categories.category_id'))
     town_id = Column(Integer, ForeignKey('towns.town_id'))
     date = Column(Text)
-    created_at = Column(Datetime, onupdate=datetime.datetime.now)
-    updated_at = Column(Datetime, onupdate=datetime.datetime.now)
+    created_at = Column(DateTime, onupdate=datetime.datetime.now)
+    updated_at = Column(DateTime, onupdate=datetime.datetime.now)
 
 class ThrowRule(Base):
     __tablename__ = 'throw_rules'
@@ -63,6 +63,6 @@ class ThrowRule(Base):
     throw_rule_id = Column(Integer, primary_key=True)
     trash_id = Column(Integer, ForeignKey('trashes.trash_id'))
     category_id = Column(Integer, ForeignKey('categories.category_id'))
-    created_at = Column(Datetime, onupdate=datetime.datetime.now)
-    updated_at = Column(Datetime, onupdate=datetime.datetime.now)
+    created_at = Column(DateTime, onupdate=datetime.datetime.now)
+    updated_at = Column(DateTime, onupdate=datetime.datetime.now)
 
