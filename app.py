@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from models.database import db_session
 from models.models import Trash, Category, ThrowRule, Area, Town, CollectionRule
 
@@ -7,13 +7,12 @@ app.config['JSON_AS_ASCII'] = False
 
 @app.route('/')
 def hello():
-    return "kawasaki-trash-api"
+    return render_template('index.html')
 
 @app.route('/api/v1/trashes/<trash_name>/categories', methods=['GET'])
 def throw_rule(trash_name):
     response = dict()
     try:
-        print(trash_name)
         trash = db_session.query(Trash).filter(Trash.name==trash_name).first()
         categories = []
         for rule in trash.throw_rules:
@@ -28,7 +27,17 @@ def throw_rule(trash_name):
         response["rule"] = [rule]
         response["code"] = 200
     except:
-        response = error_message(400)
+        response = error_message(204)
+    return jsonify(response)
+
+@app.errorhandler(400)
+def page_not_found(e):
+    response = error_message(400)
+    return jsonify(response)
+
+@app.errorhandler(404)
+def page_not_found(e):
+    response = error_message(404)
     return jsonify(response)
 
 def error_message(code):
