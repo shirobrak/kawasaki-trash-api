@@ -24,7 +24,7 @@ def throw_rule(trash_name):
         rule = dict()
         rule['categories'] = categories
         rule['detail'] = trash.detail
-        response["rule"] = [rule]
+        response["rule"] = rule
         response["code"] = 200
     except:
         response = error_message(204)
