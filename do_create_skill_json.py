@@ -1,4 +1,5 @@
 import json
+import re
 
 FILEPATH = './data/GarbageDataBase.csv'
 OUTPUTPATH = './data/trash_name.json'
@@ -27,30 +28,11 @@ def add_record(rec):
     # output : record の内容を json のリストにして返す
     tmp_set = set()
     if (rec[GARBAGE_NAME]!=""):
-        tmp_set.add(rec[GARBAGE_NAME])
-        print(rec[GARBAGE_NAME])
-        # print(tmp_set)
+        # （hogehoge）は除外する
+        trash_name = re.sub(r'(\(|（).*(\)|）)',"",rec[GARBAGE_NAME])
         
-    # if(rec[SIMILAR_WORDS]):
-    #     syms = rec[SIMILAR_WORDS].split(' ')
-    #     for sym in syms:
-    #         if(sym!=""):
-    #             print(sym)
-    #             tmp_set.add(sym)
-    # print(tmp_set)
+        tmp_set.add(trash_name)
     return tmp_set
-
-    # dic_list = []
-    # tmp = [rec[GARBAGE_NAME]]
-    # tmp.extend(rec[SIMILAR_WORDS].split(' '))
-    # for trash_name in tmp:
-    #     name_dic = dict()
-    #     val_dic = dict()
-    #     val_dic["value"] = trash_name
-    #     # val_dic["synonyms"] = []
-    #     name_dic["name"] = val_dic
-    #     dic_list.append(name_dic)
-    # return dic_list
 
 trash_dict = dict()
 trash_set = set()
@@ -60,9 +42,6 @@ with open(FILEPATH, 'r') as f:
         rec = line.split(',')
         if(rec[0]!='ID'):
             trash_set = trash_set|add_record(rec)
-
-# trash_dict["name"] = "TrashName"
-# trash_dict["values"] = trash_list
 
 dic_list = []
 for trash in trash_set:
