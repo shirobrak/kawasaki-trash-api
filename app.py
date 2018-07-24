@@ -38,7 +38,7 @@ def get_rule(trash_name):
         trashes = db_session.query(Trash).filter(Trash.name==trash_name)
         if trashes.count()!=1:
             search_name = '%' + trash_name  # 後方一致
-            trashes = db_session.query(Trash).filter(Trash.name.like(search_name))
+            trashes = db_session.query(Trash).filter(Trash.name.like(search_name)).limit(10)
         if trashes.count()>=1:
             trash_list = []
             for trash in trashes:
